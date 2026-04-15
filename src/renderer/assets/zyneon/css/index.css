@@ -1,0 +1,130 @@
+body {
+    #root {
+        #titlebar {
+            app-region: drag;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: var(--zyn-titlebar-bg);
+        }
+
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 0; right: 0; bottom: 0; left: 0;
+
+        .sidepanel {
+            background: var(--zyn-titlebar-bg);
+            padding: 0;
+            margin: 0;
+
+            ul, li, img {
+                transition: all 0.25s ease;
+                min-width: 3rem;
+                max-width: 3rem;
+            }
+
+            ul {
+                overflow: hidden;
+                padding: 0;
+                list-style-type: none;
+
+                li {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding: 0;
+                    margin: 0;
+
+                    img {
+                        padding: 0.5rem 1rem 0.5rem 1rem;
+                        height: 4.25rem;
+                        opacity: 0;
+                    }
+
+                    button {
+                        display: flex;
+                        align-items: center;
+                        height: 2rem;
+                        width: 2rem;
+                        margin: 0.25rem 0.5rem;
+                        position: relative;
+
+                        i {
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            top: 0;
+                            bottom: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        span {
+                            transition: all 0.25s ease;
+                            max-width: 0;
+                            max-height: 0;
+                            overflow: hidden;
+                            opacity: 0;
+                        }
+                    }
+                }
+
+                .version-tag {
+                    opacity: 0;
+                }
+            }
+        }
+
+        .sidepanel.active {
+            ul, li, img {
+                min-width: 16rem;
+                max-width: 16rem;
+                opacity: 1;
+
+                button {
+                    justify-content: start;
+                    width: 15rem;
+                    span {
+                        opacity: 1;
+                        margin-left: 0.5rem;
+                        max-width: 10rem;
+                        max-height: unset;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    i {
+                        position: relative;
+                    }
+                }
+
+                .version-tag {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .floatpanel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-top-left-radius: var(--bs-border-radius-xl);
+            border-top: 1px solid var(--bs-border-color-translucent);
+            border-left: 1px solid var(--bs-border-color-translucent);
+            background: var(--zyn-bg);
+        }
+    }
+}
+
+:root,[data-bs-theme="dark"] {
+
+}
+
+:root,[data-bs-theme="light"] {
+
+}

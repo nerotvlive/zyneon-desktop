@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Zyneon Desktop Concept</title>
+        <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./assets/bootstrap/icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="./assets/zyneon/css/shared.css" rel="stylesheet">
+        <link href="./assets/zyneon/css/index.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="root">
+            <div id="titlebar" class="draggable">
+                <span>Zyneon Desktop</span>
+            </div>
+            <div class="d-flex w-100 h-100">
+                <div id="menu" class="sidepanel">
+                    <ul>
+                        <li>
+                            <img id="app-logo" alt="Zyneon Desktop" src="./assets/zyneon/img/logo_light.png" />
+                        </li>
+                        <li class="px-3 py-0 pb-1 version-tag">
+                            <span class="version-badge badge bg-danger">ALPHA</span> v2026.0.0-alpha.0
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-light" onclick="document.getElementById('menu').classList.toggle('active');">
+                                <i class="bi bi-list"></i>
+                                <span>Toggle menu</span>
+                            </button>
+                        </li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li>
+                            <button id="home-button" onclick="loadPage('home.html',true);" class="btn btn-outline-light">
+                                <i class="bi bi-house"></i>
+                                <span>Home</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="discover-button" onclick="loadPage('discover.html',false);" class="btn btn-outline-light">
+                                <i class="bi bi-globe-europe-africa"></i>
+                                <span>Discover</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="library-button" onclick="loadPage('library.html',false);" class="btn btn-outline-light">
+                                <i class="bi bi-card-list"></i>
+                                <span>Library</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="settings-button" onclick="loadPage('settings.html',false);" class="btn btn-outline-light">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </button>
+                        </li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-light" onclick="location.reload();">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                <span>Reload</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-light" onclick="toggleMica();">
+                                <i id="mica-icon" class="bi bi-window"></i>
+                                <span>Toggle mica <span id="mica-status"></span></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-outline-light" onclick="toggleTheme();">
+                                <i id="theme-icon" class="bi bi-moon"></i>
+                                <span>Toggle theme <span id="theme-status"></span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="content" class="floatpanel shadow">
+
+                </div>
+            </div>
+        </div>
+        <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="./assets/zyneon/js/index.js"></script>
+        <script>
+            loadPage("home.html",true);
+        </script>
+    </body>
+</html>

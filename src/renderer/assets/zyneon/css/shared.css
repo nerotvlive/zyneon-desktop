@@ -1,0 +1,111 @@
+:root {
+    --zyn-body-bg: #00000000;
+    --zyn-backdrop-blur: blur(16px);
+    --zyn-bg: #ffffff08;
+    --zyn-titlebar-bg: #00000000;
+    --foreground: #ffffff;
+}
+
+* {
+    user-select: none;
+}
+
+body {
+    background-color: var(--zyn-body-bg);
+
+    .d-flex {
+        .sidecard {
+            max-width: 16rem;
+            min-width: 8rem;
+            border-left: 1px solid var(--bs-border-color-translucent);
+            background: var(--zyn-bg);
+        }
+    }
+
+    .card {
+        border-radius: var(--bs-border-radius-xl);
+        overflow: hidden;
+        background: var(--zyn-bg);
+
+        .card-header {
+            border-bottom: 0;
+            background: linear-gradient(to bottom,var(--zyn-bg),transparent);
+        }
+
+        .card-footer {
+            border-top: 0;
+            background: linear-gradient(to top,var(--zyn-bg),transparent);
+        }
+    }
+
+    .card.bg-danger {
+        color: var(--foreground);
+        background: rgb(from var(--bs-danger) r g b / 0.5) !important;
+    }
+
+    .btn {
+        border: 1px solid transparent;
+    }
+
+    .btn-outline-light {
+        color: var(--bs-body-color);
+    }
+
+    .btn:hover {
+        box-shadow: var(--bs-box-shadow-sm);
+        cursor: pointer;
+    }
+
+    .btn-outline-light:hover {
+        border: 1px solid var(--bs-border-color-translucent);
+        background: #ffffff10;
+        color: var(--bs-light);
+    }
+
+    .btn.active {
+        background: var(--bs-primary) !important;
+        border-color: var(--bs-primary-text-emphasis) !important;
+        box-shadow: 0 0 0.3rem var(--bs-primary-text-emphasis) !important;
+        color: var(--foreground);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.5);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 100, 100, 0.8);
+}
+
+[data-bs-theme="dark"] {
+
+    .btn-outline-light:hover {
+        border: 1px solid var(--bs-border-color-translucent);
+        background: #ffffff10;
+        color: var(--bs-light);
+    }
+}
+
+[data-bs-theme="light"] {
+    --foreground: #000000;
+
+    .btn-outline-light:hover {
+        border: 1px solid var(--bs-border-color-translucent);
+        background: #00000010;
+        color: var(--bs-dark) !important;
+    }
+}
