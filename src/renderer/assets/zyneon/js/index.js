@@ -241,3 +241,23 @@ async function loadPage(page, menu, params = "") {
 }
 
 initTheme();
+
+function initTitlebarButtons() {
+    const minimizeButton = document.getElementById("minimize-button");
+    const maximizeButton = document.getElementById("maximize-button");
+    const closeButton = document.getElementById("close-button");
+
+    minimizeButton?.addEventListener("click", () => {
+        window.electronAPI.windowControl("minimize");
+    });
+
+    maximizeButton?.addEventListener("click", () => {
+        window.electronAPI.windowControl("maximize");
+    });
+
+    closeButton?.addEventListener("click", () => {
+        window.electronAPI.windowControl("close");
+    });
+}
+
+initTitlebarButtons();

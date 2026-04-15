@@ -11,13 +11,16 @@ function createMainWindow() {
         minHeight: 700,
         backgroundColor: '#00000000',
         title: 'Zyneon Desktop',
-        titleBarStyle: 'hidden',
-        ...(process.platform !== 'darwin' ? {
+        ...(process.platform === 'win32' ? {
+            titleBarStyle: 'hidden',
             titleBarOverlay: {
                 color: '#00000000',
                 symbolColor: '#ffffff',
                 height: 39
             }
+        } : {}),
+        ...(process.platform === 'linux' ? {
+            titleBarStyle: 'hidden',
         } : {}),
         backgroundMaterial: "acrylic",
         webPreferences: {
@@ -67,19 +70,19 @@ app.on('window-all-closed', () => {
     }
 });
 
-ipcMain.on('update-titlebar-color', (event, config) => {
-    const win = BrowserWindow.fromWebContents(event.sender);
-    if (win && process.platform === 'win32') {
-        win.setTitleBarOverlay({
-            color: config.color || '#00000000',
-            symbolColor: config.symbolColor || '#ffffff',
-            height: 39
-        });
-        if(config.symbolColor === '#ffffff') {
-            win.setBackgroundMaterial("mica");
+ipcMain.on('window-control', (_event, action) => {
+    if (!mainWindow) return;
+
+    if (action === 'minimize') {
+        mainWindow.minimize();
+    } else if (action === 'maximize') {
+        if (mainWindow.isMaximized()) {
+            mainWindow.unmaximize();
         } else {
-            win.setBackgroundMaterial("acrylic");
+            mainWindow.maximize();
         }
+    } else if (action === 'close') {
+        mainWindow.close();
     }
 });
 
@@ -111,3 +114,4 @@ ipcMain.handle('modrinth-search-projects', async (_event, payload = {}) => {
 
     return response.json();
 });
+
