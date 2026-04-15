@@ -92,7 +92,7 @@ body {
                     span {
                         opacity: 1;
                         margin-left: 0.5rem;
-                        max-width: 10rem;
+                        max-width: 12rem;
                         max-height: unset;
                         white-space: nowrap;
                         text-overflow: ellipsis;

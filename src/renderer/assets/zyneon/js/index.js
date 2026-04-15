@@ -137,7 +137,7 @@ function initMicaButton() {
     if(document.getElementById("mica-icon")) {
         if (!allowMica) {
             document.getElementById("mica-icon").className = "bi bi-x-lg";
-            document.getElementById("mica-status").innerText = "Forbidden";
+            document.getElementById("mica-status").innerText = "Unsupported";
         } else {
             const enableMica = localStorage.getItem('enable-mica') === null || localStorage.getItem('enable-mica') === 'true';
             document.getElementById("mica-icon").className = enableMica ? "bi bi-windows" : "bi bi-window";
