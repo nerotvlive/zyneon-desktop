@@ -119,6 +119,9 @@ ipcMain.handle('launcher:build-profile', async (_event, payload = {}) => {
 
 ipcMain.handle('launcher:start', async (_event, payload = {}) => {
     try {
+        if (!authService.isLoggedIn()) {
+            throw new Error('You have to be logged in to start an instance.');
+        }
         const data = await launchService.start(payload);
         return { ok: true, data };
     } catch (error) {
@@ -190,10 +193,16 @@ ipcMain.handle('auth:logout', async () => {
 });
 
 ipcMain.handle('auth:get-user', async () => {
+    if (!authService.isLoggedIn()) {
+        authService.loadSession();
+    }
     return authService.getUser();
 });
 
 ipcMain.handle('auth:is-logged-in', async () => {
+    if (!authService.isLoggedIn()) {
+        authService.loadSession();
+    }
     return authService.isLoggedIn();
 });
 

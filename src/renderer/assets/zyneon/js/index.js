@@ -183,14 +183,14 @@ function renderDiscoverResults(items = []) {
     if (!resultsEl) return;
 
     if (!items.length) {
-        resultsEl.innerHTML = `<div class="text-body-secondary">Keine Ergebnisse gefunden.</div>`;
+        resultsEl.innerHTML = `<div class="text-body-secondary">No results found.</div>`;
         return;
     }
 
     resultsEl.innerHTML = items.map(item => {
-        const title = escapeHtml(item.title || item.slug || "Ohne Titel");
+        const title = escapeHtml(item.title || item.slug || "Untitled");
         const description = escapeHtml(item.description || "");
-        const downloads = Number(item.downloads || 0).toLocaleString("de-DE");
+        const downloads = Number(item.downloads || 0).toLocaleString("en-US");
         const categories = Array.isArray(item.categories) ? item.categories.slice(0, 4).join(", ") : "";
         const url = `https://modrinth.com/mod/${encodeURIComponent(item.slug || item.project_id || "")}`;
 
@@ -237,11 +237,21 @@ function initLibraryLauncherUI() {
         launcherUnsubscribe = null;
     }
 
-    // Toggle visibility of the username field based on login status
+    // Toggle visibility of the username field and start button based on login status
     window.electronAPI.authGetUser().then(user => {
         const usernameContainer = document.getElementById('launch-username-container');
         if (usernameContainer) {
             usernameContainer.style.display = user ? 'none' : 'block';
+        }
+
+        if (!user && startButton) {
+            startButton.disabled = true;
+            startButton.classList.add('disabled');
+            startButton.title = "Login required";
+        } else if (user && startButton) {
+            startButton.disabled = false;
+            startButton.classList.remove('disabled');
+            startButton.title = "";
         }
     });
 
@@ -398,14 +408,14 @@ async function updateAuthStatus() {
             updateAuthStatus();
         };
     } else {
-        authStatus.innerText = 'Anmelden';
+        authStatus.innerText = 'Login';
         authIcon.className = 'bi bi-person-circle';
         authButton.onclick = async () => {
             const res = await window.electronAPI.authLoginMicrosoft();
             if (res.ok) {
                 updateAuthStatus();
             } else {
-                alert("Login fehlgeschlagen: " + res.error);
+                alert("Login failed: " + res.error);
             }
         };
     }

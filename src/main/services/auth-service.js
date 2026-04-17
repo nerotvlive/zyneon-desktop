@@ -38,41 +38,35 @@ class AuthService extends EventEmitter {
             return { ok: true, user: this.userData };
         } catch (error) {
             console.error('Microsoft login error:', error);
+            // If we have cached user data, we can still return it for offline use if the error is network-related
+            // but we need to ensure userData is actually loaded
+            if (!this.userData) {
+                this.loadSession();
+            }
+            if (this.userData) {
+                console.log('Using cached user data due to login error.');
+                return { ok: true, user: this.userData, offline: true };
+            }
             return { ok: false, error: error.message };
         }
     }
 
     async loginOffline(username) {
-        if (!username || username.trim() === '') {
-            return { ok: false, error: 'Username is required for offline mode.' };
+        if (!this.userData) {
+            this.loadSession();
         }
 
-        // Generate a deterministic UUID for the offline username
-        // Simplified version of what some launchers do
-        const uuid = '00000000-0000-0000-0000-' + username.split('').reduce((acc, char) => {
-            return acc + char.charCodeAt(0).toString(16);
-        }, '').slice(0, 12).padStart(12, '0');
+        if (!this.userData) {
+            return { ok: false, error: 'Kein Account hinterlegt. Bitte melde dich zuerst an.' };
+        }
 
-        this.userData = {
-            type: 'offline',
-            username: username,
-            uuid: uuid,
-            accessToken: '0',
-            clientToken: '0',
-            profile: {
-                name: username,
-                uuid: uuid,
-                access_token: '0',
-                client_token: '0',
-                user_properties: '{}',
-                meta: {
-                    type: 'mojang',
-                    offline: true
-                }
-            }
-        };
+        // If the same user was previously logged in, or no username provided, reuse their data for offline
+        if (!username || this.userData.username === username) {
+            console.log('Reusing cached user data for offline session.');
+            return { ok: true, user: this.userData };
+        }
 
-        this.saveSession();
+        // Return the existing session regardless, as we don't allow "pure" offline without prior account
         return { ok: true, user: this.userData };
     }
 
