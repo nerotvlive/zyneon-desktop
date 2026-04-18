@@ -23,5 +23,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
         const listener = (_event, status) => callback(status);
         ipcRenderer.on('auth:state-changed', listener);
         return () => ipcRenderer.removeListener('auth:state-changed', listener);
+    },
+    onInitTitlebarButtons: (callback) => {
+        ipcRenderer.on('init-titlebar-buttons', () => callback());
     }
 });

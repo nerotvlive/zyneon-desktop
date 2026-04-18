@@ -438,3 +438,6 @@ async function updateAuthStatus() {
 
 updateAuthStatus();
 
+window.electronAPI.onInitTitlebarButtons(() => {
+    initTitlebarButtons();
+});

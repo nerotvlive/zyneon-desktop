@@ -17,17 +17,17 @@ function createMainWindow() {
         backgroundColor: '#00000000',
         title: 'Zyneon Desktop',
         ...(process.platform === 'win32' ? {
+            backgroundMaterial: "mica",
             titleBarStyle: 'hidden',
             titleBarOverlay: {
                 color: '#00000000',
                 symbolColor: '#ffffff',
-                height: 39
+                height: 40
             }
         } : {}),
-        ...(process.platform === 'linux' ? {
+        ...(process.platform !== 'win32' ? {
             titleBarStyle: 'hidden',
         } : {}),
-        backgroundMaterial: "mica",
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -57,7 +57,7 @@ function createMainWindow() {
     });
 
     if(process.platform === 'linux') {
-        mainWindow.loadFile(path.join(__dirname, '../renderer/index.html?linux=true'));
+        mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
     } else {
         mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
     }
@@ -219,12 +219,14 @@ ipcMain.on('update-titlebar-color', (event, config) => {
         win.setTitleBarOverlay({
             color: config.color || '#00000000',
             symbolColor: config.symbolColor || '#ffffff',
-            height: 39
+            height: config.height || 40
         });
         if(config.symbolColor === '#ffffff') {
             win.setBackgroundMaterial("mica");
         } else {
             win.setBackgroundMaterial("acrylic");
         }
+    } else {
+        win.webContents.send('init-titlebar-buttons');
     }
 });
