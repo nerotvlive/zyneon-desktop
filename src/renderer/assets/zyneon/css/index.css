@@ -2,33 +2,67 @@ body {
     #root {
         #titlebar {
             app-region: drag;
+            position: relative;
             min-height: 40px;
             max-height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 0.9rem;
-            font-weight: 500;
-            position: relative;
             background: var(--zyn-titlebar-bg);
+            width: 100%;
+            overflow: hidden;
 
-            .titlebar-buttons {
-                position: absolute;
+            .start, .end {
+                position: relative;
+                width: 100%;
+                min-height: 40px;
+                max-height: 40px;
+                overflow: hidden;
                 display: flex;
-                gap: 0;
-                right: 0;
-                app-region: no-drag;
+                justify-content: center;
+                align-items: center;
+            }
 
-                button {
-                    border-radius: 0;
+            .start {
+                justify-content: start;
+            }
+
+            strong {
+                min-width: fit-content;
+                max-width: fit-content;
+            }
+
+            .end {
+                justify-content: end;
+
+                .titlebar-buttons {
+                    app-region: no-drag;
+                    position: relative;
+                    display: flex;
+                    gap: 0;
+                    right: 0;
+                    z-index: -1;
+                    opacity: 0;
+
+                    button {
+                        border-radius: 0;
+                        border: none;
+                        height: 40px;
+                    }
+
+                    button:hover {
+                        background: var(--bs-border-color-translucent);
+                    }
+
+                    button:last-child:hover {
+                        background: red;
+                    }
                 }
 
-                button:hover {
-                    background: var(--bs-border-color-translucent);
-                }
-
-                button:last-child:hover {
-                    background: red;
+                .titlebar-buttons.active {
+                    z-index: 1;
+                    opacity: 1;
                 }
             }
         }

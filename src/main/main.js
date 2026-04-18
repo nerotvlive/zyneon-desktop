@@ -14,10 +14,10 @@ function createMainWindow() {
         height: 800,
         minWidth: 1100,
         minHeight: 700,
-        backgroundColor: '#00000000',
         title: 'Zyneon Desktop',
         ...(process.platform === 'win32' ? {
-            backgroundMaterial: "mica",
+            backgroundColor: '#00000000',
+            backgroundMaterial: "auto",
             titleBarStyle: 'hidden',
             titleBarOverlay: {
                 color: '#00000000',
@@ -26,6 +26,8 @@ function createMainWindow() {
             }
         } : {}),
         ...(process.platform !== 'win32' ? {
+            backgroundColor: '#000000',
+            backgroundMaterial: "none",
             titleBarStyle: 'hidden',
         } : {}),
         webPreferences: {
@@ -215,18 +217,27 @@ ipcMain.handle('auth:is-logged-in', async () => {
 
 ipcMain.on('update-titlebar-color', (event, config) => {
     const win = BrowserWindow.fromWebContents(event.sender);
-    if (win && process.platform === 'win32') {
-        win.setTitleBarOverlay({
-            color: config.color || '#00000000',
-            symbolColor: config.symbolColor || '#ffffff',
-            height: config.height || 40
-        });
-        if(config.symbolColor === '#ffffff') {
-            win.setBackgroundMaterial("mica");
+    if(win) {
+        if (process.platform === 'win32') {
+            win.setBackgroundColor(config.color || '#00000000');
+            win.setTitleBarOverlay({
+                color: config.color || '#00000000',
+                symbolColor: config.symbolColor || '#ffffff',
+                height: config.height || 40
+            });
+            if (config.symbolColor === '#ffffff') {
+                win.setBackgroundMaterial("mica");
+            } else {
+                win.setBackgroundMaterial("acrylic");
+            }
         } else {
-            win.setBackgroundMaterial("acrylic");
+            win.setBackgroundMaterial("none");
+            if (config.symbolColor === '#ffffff') {
+                win.setBackgroundColor('#000000');
+            } else {
+                win.setBackgroundColor('#ffffff');
+            }
+            win.webContents.send('init-titlebar-buttons');
         }
-    } else {
-        win.webContents.send('init-titlebar-buttons');
     }
 });

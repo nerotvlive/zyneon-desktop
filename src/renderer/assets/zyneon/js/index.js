@@ -389,7 +389,9 @@ async function loadPage(page, menu, params = "") {
 initTheme();
 
 function initTitlebarButtons() {
-    document.getElementById("titlebar-buttons").classList.remove("d-none");
+    if(!document.getElementById("titlebar-buttons").classList.contains("active")) {
+        document.getElementById("titlebar-buttons").classList.add("active");
+    }
     const minimizeButton = document.getElementById("minimize-button");
     const maximizeButton = document.getElementById("maximize-button");
     const closeButton = document.getElementById("close-button");
