@@ -6,6 +6,7 @@ let darkMode = false;
 let allowMica = false;
 let launcherUnsubscribe = null;
 let authUnsubscribe = null;
+let forceMica = false;
 
 async function initColors(bodyBg_,bg_) {
     if(darkMode) {
@@ -13,12 +14,12 @@ async function initColors(bodyBg_,bg_) {
     } else {
         document.body.setAttribute("data-bs-theme", "light")
     }
-    if (navigator.userAgentData) {
+    if (navigator.userAgentData || forceMica) {
         navigator.userAgentData.getHighEntropyValues(["platformVersion"]).then(ua => {
-            if (ua.platform === "Windows") {
+            if (ua.platform === "Windows" || forceMica) {
                 const majorPlatformVersion = parseInt(ua.platformVersion.split('.')[0]);
-                if (majorPlatformVersion >= 13) {
-                    if(allowMica&&(localStorage.getItem('enable-mica')===null||localStorage.getItem('enable-mica')==='true')) {
+                if (majorPlatformVersion >= 13 || forceMica) {
+                    if((allowMica&&(localStorage.getItem('enable-mica')===null||localStorage.getItem('enable-mica')==='true'))||forceMica) {
                         document.body.style.setProperty("--zyn-body-bg", bodyBgMica);
                         document.body.style.setProperty("--zyn-bg", bgMica);
                         return;
@@ -151,7 +152,10 @@ function initThemeButton() {
 
 function initMicaButton() {
     if(document.getElementById("mica-icon")) {
-        if (!allowMica) {
+        if(forceMica) {
+            document.getElementById("mica-icon").className = "bi bi-arrow-down-right-circle-fill";
+            document.getElementById("mica-status").innerText = "Forced";
+        } else if (!allowMica) {
             document.getElementById("mica-icon").className = "bi bi-x-lg";
             document.getElementById("mica-status").innerText = "Unsupported";
         } else {
