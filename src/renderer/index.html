@@ -12,11 +12,12 @@
         <div id="root">
             <div id="titlebar" class="draggable">
                 <div class="start">
-                    <!--No start content here yet-->
+                    <span class="badge bg-danger">UNSTABLE</span>
+                    <span class="badge bg-info text-dark">STATIC</span>
+                    <span class="badge bg-dark">v/2026.0.0-alpha.1</span>
                 </div>
                 <strong>Zyneon Desktop</strong>
                 <div class="end">
-                    <span class="mx-2 badge bg-danger-subtle border-1 border-danger">EXPERIMENTAL</span>
                     <div class="titlebar-buttons" id="titlebar-buttons">
                         <button id="minimize-button" class="btn btn-outline-light">
                             <i class="bi bi-dash-lg"></i>
@@ -35,9 +36,6 @@
                     <ul>
                         <li>
                             <img id="app-logo" alt="Zyneon Desktop" src="./assets/zyneon/img/logo_light.png" />
-                        </li>
-                        <li class="px-3 py-0 pb-1 version-tag">
-                            <span class="version-badge badge bg-danger">ALPHA</span> v2026.0.0-alpha.1
                         </li>
                         <li>
                             <button class="btn btn-outline-light" onclick="document.getElementById('menu').classList.toggle('active');">
@@ -88,7 +86,7 @@
                             </button>
                         </li>
                         <li>
-                            <button class="btn btn-outline-light" onclick="toggleMica();">
+                            <button class="btn btn-outline-light" id="toggleMica-button">
                                 <i id="mica-icon" class="bi bi-window"></i>
                                 <span>Toggle drop <span id="mica-status"></span></span>
                             </button>
@@ -110,6 +108,9 @@
         <script src="./assets/zyneon/js/index.js"></script>
         <script>
             loadPage("home.html",true);
+            document.getElementById("toggleMica-button").onclick = (event) => {
+                toggleMica(event.shiftKey);
+            }
         </script>
     </body>
 </html>

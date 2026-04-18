@@ -41,7 +41,12 @@ async function initColors(bodyBg_,bg_) {
     }
 }
 
-async function toggleMica() {
+async function toggleMica(toggleForce) {
+    if(toggleForce) {
+        if(toggleForce === "true" || toggleForce === true) {
+            forceMica = !forceMica;
+        }
+    }
     if(localStorage.getItem("enable-mica")) {
         if(localStorage.getItem("enable-mica")==="true") {
             localStorage.setItem("enable-mica","false");
